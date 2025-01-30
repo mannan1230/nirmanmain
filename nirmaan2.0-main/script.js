@@ -102,7 +102,7 @@ const additionalLocations = [
         address: "Koramangala, Bangalore",
         details: {
             compartments: 10,
-            availableSpace: "5000 kg",
+            availableSpace: "4500 kg",
             minTemp: "-25°C",
             maxTemp: "-20°C"
         }
@@ -110,7 +110,7 @@ const additionalLocations = [
     {
         position: { lat: 12.9783, lng: 77.6408 },
         title: "FrostBite Storage",
-        temp: "-19°C",
+        temp: "-18°C",
         availability: "30%",
         address: "HSR Layout, Bangalore",
         details: {
@@ -123,13 +123,182 @@ const additionalLocations = [
     {
         position: { lat: 12.9349, lng: 77.6055 },
         title: "Polar Storage Hub",
-        temp: "-21°C",
+        temp: "-25°C",
         availability: "55%",
         address: "JP Nagar, Bangalore",
         details: {
             compartments: 12,
+            availableSpace: "6000 kg",
+            minTemp: "-28°C",
+            maxTemp: "-22°C"
+        }
+    },
+    {
+        position: { lat: 13.0012, lng: 77.5997 },
+        title: "CryoTech Storage",
+        temp: "-23°C",
+        availability: "65%",
+        address: "RT Nagar, Bangalore",
+        details: {
+            compartments: 9,
             availableSpace: "4200 kg",
+            minTemp: "-25°C",
+            maxTemp: "-20°C"
+        }
+    },
+    {
+        position: { lat: 12.9121, lng: 77.6446 },
+        title: "Glacier Cold Chain",
+        temp: "-20°C",
+        availability: "40%",
+        address: "BTM Layout, Bangalore",
+        details: {
+            compartments: 7,
+            availableSpace: "3000 kg",
+            minTemp: "-22°C",
+            maxTemp: "-18°C"
+        }
+    },
+    {
+        position: { lat: 13.0231, lng: 77.6226 },
+        title: "Snowflake Storage",
+        temp: "-19°C",
+        availability: "70%",
+        address: "Banaswadi, Bangalore",
+        details: {
+            compartments: 8,
+            availableSpace: "3800 kg",
+            minTemp: "-22°C",
+            maxTemp: "-16°C"
+        }
+    },
+    {
+        position: { lat: 12.9342, lng: 77.6047 },
+        title: "PolarTech Storage",
+        temp: "-22°C",
+        availability: "65%",
+        address: "Wilson Garden, Bangalore",
+        details: {
+            compartments: 10,
+            availableSpace: "4800 kg",
+            minTemp: "-25°C",
+            maxTemp: "-18°C"
+        }
+    },
+    {
+        position: { lat: 12.9850, lng: 77.5533 },
+        title: "FreezePro Solutions",
+        temp: "-20°C",
+        availability: "55%",
+        address: "Rajajinagar, Bangalore",
+        details: {
+            compartments: 8,
+            availableSpace: "3600 kg",
             minTemp: "-23°C",
+            maxTemp: "-17°C"
+        }
+    },
+    {
+        position: { lat: 13.0098, lng: 77.5511 },
+        title: "IceTech Storage",
+        temp: "-18°C",
+        availability: "70%",
+        address: "Yeshwanthpur, Bangalore",
+        details: {
+            compartments: 12,
+            availableSpace: "5500 kg",
+            minTemp: "-20°C",
+            maxTemp: "-15°C"
+        }
+    },
+    {
+        position: { lat: 12.9217, lng: 77.5936 },
+        title: "CryoStore Solutions",
+        temp: "-23°C",
+        availability: "45%",
+        address: "Basavanagudi, Bangalore",
+        details: {
+            compartments: 7,
+            availableSpace: "3200 kg",
+            minTemp: "-25°C",
+            maxTemp: "-20°C"
+        }
+    },
+    {
+        position: { lat: 13.0641, lng: 77.5876 },
+        title: "Arctic Zone Storage",
+        temp: "-21°C",
+        availability: "80%",
+        address: "Hebbal, Bangalore",
+        details: {
+            compartments: 9,
+            availableSpace: "4200 kg",
+            minTemp: "-24°C",
+            maxTemp: "-18°C"
+        }
+    },
+    {
+        position: { lat: 12.9957, lng: 77.5713 },
+        title: "SubZero Storage",
+        temp: "-20°C",
+        availability: "75%",
+        address: "Malleshwaram, Bangalore",
+        details: {
+            compartments: 11,
+            availableSpace: "5200 kg",
+            minTemp: "-23°C",
+            maxTemp: "-17°C"
+        }
+    },
+    {
+        position: { lat: 12.9063, lng: 77.5857 },
+        title: "ColdChain Express",
+        temp: "-19°C",
+        availability: "60%",
+        address: "Banashankari, Bangalore",
+        details: {
+            compartments: 9,
+            availableSpace: "4100 kg",
+            minTemp: "-21°C",
+            maxTemp: "-16°C"
+        }
+    },
+    {
+        position: { lat: 13.0294, lng: 77.6318 },
+        title: "FrostGuard Facilities",
+        temp: "-22°C",
+        availability: "85%",
+        address: "Kalyan Nagar, Bangalore",
+        details: {
+            compartments: 14,
+            availableSpace: "6500 kg",
+            minTemp: "-25°C",
+            maxTemp: "-19°C"
+        }
+    },
+    {
+        position: { lat: 12.9592, lng: 77.5975 },
+        title: "ChillZone Storage",
+        temp: "-17°C",
+        availability: "50%",
+        address: "Richmond Town, Bangalore",
+        details: {
+            compartments: 8,
+            availableSpace: "3800 kg",
+            minTemp: "-20°C",
+            maxTemp: "-15°C"
+        }
+    },
+    {
+        position: { lat: 13.0484, lng: 77.5873 },
+        title: "PolarPeak Solutions",
+        temp: "-21°C",
+        availability: "70%",
+        address: "Jakkur, Bangalore",
+        details: {
+            compartments: 10,
+            availableSpace: "4700 kg",
+            minTemp: "-24°C",
             maxTemp: "-18°C"
         }
     }
@@ -173,22 +342,19 @@ function initializeMap() {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Add markers for all cold storages
-    coldStorages.forEach(storage => {
-        const marker = L.marker([storage.location.lat, storage.location.lng])
+    // Add markers for all locations from additionalLocations array
+    additionalLocations.forEach(storage => {
+        const marker = L.marker([storage.position.lat, storage.position.lng])
             .addTo(map);
-
-        const availableCompartments = storage.compartments.filter(c => c.available).length;
-        const totalCompartments = storage.compartments.length;
 
         const popupContent = `
             <div class="storage-popup">
-                <h3>${storage.name}</h3>
+                <h3>${storage.title}</h3>
                 <p><strong>Address:</strong> ${storage.address}</p>
-                <p><strong>Temperature:</strong> ${storage.temperature}</p>
-                <p><strong>Available Compartments:</strong> ${availableCompartments}/${totalCompartments}</p>
-                <p><strong>Distance:</strong> ${storage.distance} km</p>
-                <button onclick="showStorageDetails(${storage.id})" class="view-details-btn">
+                <p><strong>Temperature:</strong> ${storage.temp}</p>
+                <p><strong>Availability:</strong> ${storage.availability}</p>
+                <p><strong>Compartments:</strong> ${storage.details.compartments} units</p>
+                <button onclick="showStorageDetails('${storage.title}')" class="view-details-btn">
                     View Details
                 </button>
             </div>
@@ -201,58 +367,78 @@ function initializeMap() {
     displayStorageList();
 }
 
+// Update the displayStorageList function to show all locations
 function displayStorageList() {
     const storageCards = document.getElementById('storageCards');
-    storageCards.innerHTML = coldStorages.map(storage => {
-        const availableCompartments = storage.compartments.filter(c => c.available).length;
-        const totalCompartments = storage.compartments.length;
-        
-        return `
-            <div class="storage-card" onclick="showStorageDetails(${storage.id})">
-                <h4>${storage.name}</h4>
+    if (storageCards) {
+        storageCards.innerHTML = additionalLocations.map(storage => `
+            <div class="storage-card" onclick="showStorageDetails('${storage.title}')">
+                <h4>${storage.title}</h4>
                 <div class="storage-info-item">
                     <span>Location:</span>
                     <span>${storage.address}</span>
                 </div>
                 <div class="storage-info-item">
-                    <span>Distance:</span>
-                    <span>${storage.distance} km</span>
-                </div>
-                <div class="storage-info-item">
                     <span>Temperature:</span>
-                    <span>${storage.temperature}</span>
+                    <span>${storage.temp}</span>
                 </div>
                 <div class="storage-info-item">
-                    <span>Available:</span>
-                    <span>${availableCompartments} of ${totalCompartments} compartments</span>
+                    <span>Availability:</span>
+                    <span>${storage.availability}</span>
+                </div>
+                <div class="storage-info-item">
+                    <span>Compartments:</span>
+                    <span>${storage.details.compartments} units</span>
+                </div>
+                <div class="storage-info-item">
+                    <span>Available Space:</span>
+                    <span>${storage.details.availableSpace}</span>
                 </div>
             </div>
-        `;
-    }).join('');
+        `).join('');
+    }
 }
 
-function showStorageDetails(storageId) {
-    const storage = coldStorages.find(s => s.id === storageId);
+// Update the showStorageDetails function to work with the new data structure
+function showStorageDetails(storageTitle) {
+    const storage = additionalLocations.find(s => s.title === storageTitle);
     if (!storage) return;
-
-    // Update active state in storage list
-    document.querySelectorAll('.storage-card').forEach(card => {
-        card.classList.remove('active');
-    });
-    
-    const selectedCard = document.querySelector(`.storage-card:nth-child(${storageId})`);
-    if (selectedCard) {
-        selectedCard.classList.add('active');
-    }
 
     // Show storage details
     const storageDetails = document.getElementById('storageDetails');
-    storageDetails.style.display = 'block';
-    document.getElementById('storageName').textContent = storage.name;
-    document.getElementById('storageDistance').textContent = `Distance: ${storage.distance} km`;
-
-    // Update compartment list
-    updateCompartmentList(storage);
+    if (storageDetails) {
+        storageDetails.style.display = 'block';
+        document.getElementById('storageName').textContent = storage.title;
+        
+        // Update other details
+        const detailsHtml = `
+            <div class="storage-details-content">
+                <div class="detail-item">
+                    <span class="label">Address:</span>
+                    <span class="value">${storage.address}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Temperature Range:</span>
+                    <span class="value">${storage.details.minTemp} to ${storage.details.maxTemp}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Available Space:</span>
+                    <span class="value">${storage.details.availableSpace}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Current Availability:</span>
+                    <span class="value">${storage.availability}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Total Compartments:</span>
+                    <span class="value">${storage.details.compartments} units</span>
+                </div>
+            </div>
+        `;
+        
+        document.querySelector('.storage-details-content')?.remove();
+        storageDetails.insertAdjacentHTML('beforeend', detailsHtml);
+    }
 }
 
 function updateCompartmentList(storage) {
@@ -339,7 +525,6 @@ function submitCustomerRegistration(event) {
     event.preventDefault();
     const form = event.target;
     
-    // Store registration data
     window.registrationData = {
         type: 'customer',
         email: form.querySelector('input[name="email"]').value,
@@ -349,41 +534,112 @@ function submitCustomerRegistration(event) {
         password: form.querySelector('input[name="password"]').value
     };
 
-    // Generate and show OTP
-    const dummyOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log('Demo OTP:', dummyOTP); // For testing
-
+    // Show loading state
     Swal.fire({
-        title: 'OTP Verification',
-        html: `
-            <div style="margin-bottom: 1rem;">
-                <p>Demo OTP: <strong>${dummyOTP}</strong></p>
-                <p>Enter the OTP to complete registration</p>
-            </div>
-            <input type="text" id="otpInput" class="swal2-input" placeholder="Enter 6-digit OTP">
-        `,
-        showCancelButton: true,
-        confirmButtonText: 'Verify',
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-            const enteredOTP = document.getElementById('otpInput').value;
-            if (enteredOTP === dummyOTP) {
-                return true;
-            }
-            Swal.showValidationMessage('Invalid OTP');
-            return false;
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Registration Successful',
-                text: 'You can now login with your credentials'
-            }).then(() => {
-                showLogin();
-            });
+        title: 'Sending OTP',
+        text: 'Please wait...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => {
+            Swal.showLoading();
         }
     });
+
+    // Generate OTP for demo
+    const dummyOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log('Demo OTP:', dummyOTP);
+
+    // Close loading and show OTP input
+    setTimeout(() => {
+        Swal.fire({
+            title: 'Enter OTP',
+            html: `
+                <div class="otp-verification">
+                    <p style="margin-bottom: 15px;">A verification code has been sent to your email</p>
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                        <p style="color: #666; margin: 0;">Demo Mode: Use OTP</p>
+                        <p style="font-size: 24px; font-weight: bold; color: #FF6B6B; margin: 5px 0;">${dummyOTP}</p>
+                    </div>
+                    <div class="otp-container">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                    </div>
+                    <div class="timer-container">
+                        <span id="otpTimer" style="color: #666;">Time remaining: 30s</span>
+                    </div>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Verify OTP',
+            confirmButtonColor: '#FF6B6B',
+            cancelButtonColor: '#6c757d',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            customClass: {
+                popup: 'otp-popup'
+            },
+            didOpen: () => {
+                // Set up OTP input behavior
+                const otpInputs = document.querySelectorAll('.otp-digit');
+                otpInputs.forEach((input, index) => {
+                    input.addEventListener('keyup', (e) => {
+                        if (e.key >= '0' && e.key <= '9') {
+                            if (index < otpInputs.length - 1) {
+                                otpInputs[index + 1].focus();
+                            }
+                        } else if (e.key === 'Backspace') {
+                            if (index > 0) {
+                                otpInputs[index - 1].focus();
+                            }
+                        }
+                    });
+                });
+
+                // Focus first input
+                otpInputs[0].focus();
+
+                // Start timer
+                let timeLeft = 30;
+                const timerDisplay = document.getElementById('otpTimer');
+                const timer = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft >= 0) {
+                        timerDisplay.textContent = `Time remaining: ${timeLeft}s`;
+                    } else {
+                        clearInterval(timer);
+                        timerDisplay.textContent = 'OTP expired';
+                        timerDisplay.style.color = '#dc3545';
+                        Swal.getConfirmButton().disabled = true;
+                    }
+                }, 1000);
+            },
+            preConfirm: () => {
+                const enteredOTP = Array.from(document.querySelectorAll('.otp-digit'))
+                    .map(input => input.value)
+                    .join('');
+                if (enteredOTP === dummyOTP) {
+                    return true;
+                }
+                Swal.showValidationMessage('Invalid OTP. Please use the demo OTP shown above.');
+                return false;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful',
+                    text: 'You can now login with your credentials',
+                    confirmButtonColor: '#FF6B6B'
+                }).then(() => {
+                    showLogin();
+                });
+            }
+        });
+    }, 1500);
 }
 
 // Update the submitAdminRegistration function
@@ -411,8 +667,108 @@ function submitAdminRegistration(event) {
         }
     });
 
-    // Send OTP
-    sendOTP(window.registrationData.email);
+    // Generate OTP for demo
+    const dummyOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log('Demo OTP:', dummyOTP);
+
+    // Close loading and show OTP input
+    setTimeout(() => {
+        Swal.fire({
+            title: 'Enter OTP',
+            html: `
+                <div class="otp-verification">
+                    <p style="margin-bottom: 15px;">A verification code has been sent to your email</p>
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                        <p style="color: #666; margin: 0;">Demo Mode: Use OTP</p>
+                        <p style="font-size: 24px; font-weight: bold; color: #FF6B6B; margin: 5px 0;">${dummyOTP}</p>
+                    </div>
+                    <div class="otp-container">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                        <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                    </div>
+                    <div class="timer-container">
+                        <span id="otpTimer" style="color: #666;">Time remaining: 30s</span>
+                    </div>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Verify OTP',
+            confirmButtonColor: '#FF6B6B',
+            cancelButtonColor: '#6c757d',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            customClass: {
+                popup: 'otp-popup'
+            },
+            didOpen: () => {
+                // Set up OTP input behavior
+                const otpInputs = document.querySelectorAll('.otp-digit');
+                otpInputs.forEach((input, index) => {
+                    input.addEventListener('keyup', (e) => {
+                        if (e.key >= '0' && e.key <= '9') {
+                            if (index < otpInputs.length - 1) {
+                                otpInputs[index + 1].focus();
+                            }
+                        } else if (e.key === 'Backspace') {
+                            if (index > 0) {
+                                otpInputs[index - 1].focus();
+                            }
+                        }
+                    });
+                });
+
+                // Focus first input
+                otpInputs[0].focus();
+
+                // Start timer
+                let timeLeft = 30;
+                const timerDisplay = document.getElementById('otpTimer');
+                const timer = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft >= 0) {
+                        timerDisplay.textContent = `Time remaining: ${timeLeft}s`;
+                    } else {
+                        clearInterval(timer);
+                        timerDisplay.textContent = 'OTP expired';
+                        timerDisplay.style.color = '#dc3545';
+                        Swal.getConfirmButton().disabled = true;
+                    }
+                }, 1000);
+            },
+            preConfirm: () => {
+                const enteredOTP = Array.from(document.querySelectorAll('.otp-digit'))
+                    .map(input => input.value)
+                    .join('');
+                if (enteredOTP === dummyOTP) {
+                    return true;
+                }
+                Swal.showValidationMessage('Invalid OTP. Please use the demo OTP shown above.');
+                return false;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Create request card for super admin
+                const requestCard = createRequestCard(window.registrationData);
+                const requestsContainer = document.getElementById('coldStorageRequests');
+                if (requestsContainer) {
+                    requestsContainer.appendChild(requestCard);
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Submitted',
+                    text: 'Your registration will be reviewed by the admin',
+                    confirmButtonColor: '#FF6B6B'
+                }).then(() => {
+                    showLogin();
+                });
+            }
+        });
+    }, 1500);
 }
 
 // Update the sendOTP function with simpler implementation
@@ -1128,4 +1484,293 @@ function createMarkerPopup(storage) {
             </button>
         </div>
     `;
-} 
+}
+
+// Add dummy data for registered cold storages
+const registeredStorages = [
+    {
+        name: "Central Cold Storage",
+        licenseNo: "CSL123456",
+        email: "central@coldstorage.com",
+        status: "active",
+        joinDate: "2024-01-15"
+    },
+    {
+        name: "Metro Cold Storage",
+        licenseNo: "MCS789012",
+        email: "metro@coldstorage.com",
+        status: "active",
+        joinDate: "2024-01-18"
+    },
+    {
+        name: "Arctic Storage Solutions",
+        licenseNo: "ASS345678",
+        email: "arctic@storage.com",
+        status: "active",
+        joinDate: "2024-01-20"
+    },
+    {
+        name: "FrostBite Storage",
+        licenseNo: "FBS901234",
+        email: "frost@storage.com",
+        status: "suspended",
+        joinDate: "2024-01-22"
+    }
+];
+
+// Add dummy data for registered customers
+const registeredCustomers = [
+    {
+        name: "John Doe",
+        email: "john@example.com",
+        joinDate: "2024-01-15",
+        status: "active"
+    },
+    {
+        name: "Alice Smith",
+        email: "alice@example.com",
+        joinDate: "2024-01-16",
+        status: "active"
+    },
+    {
+        name: "Bob Johnson",
+        email: "bob@example.com",
+        joinDate: "2024-01-18",
+        status: "active"
+    },
+    {
+        name: "Emma Wilson",
+        email: "emma@example.com",
+        joinDate: "2024-01-19",
+        status: "suspended"
+    },
+    {
+        name: "Michael Brown",
+        email: "michael@example.com",
+        joinDate: "2024-01-20",
+        status: "active"
+    }
+];
+
+// Add dummy data for rejected cold storages
+const rejectedStorages = [
+    {
+        name: "Quick Freeze Storage",
+        licenseNo: "QFS123456",
+        email: "quick@freeze.com",
+        rejectionCount: 2,
+        lastRejected: "2024-01-25",
+        reason: "Invalid license documentation"
+    },
+    {
+        name: "Cool Chain Solutions",
+        licenseNo: "CCS789012",
+        email: "info@coolchain.com",
+        rejectionCount: 1,
+        lastRejected: "2024-01-23",
+        reason: "Incomplete facility details"
+    },
+    {
+        name: "Arctic Zone Storage",
+        licenseNo: "AZS345678",
+        email: "contact@arcticzone.com",
+        rejectionCount: 3,
+        lastRejected: "2024-01-22",
+        reason: "Failed compliance check"
+    },
+    {
+        name: "Frost Solutions",
+        licenseNo: "FSL901234",
+        email: "admin@frostsolutions.com",
+        rejectionCount: 1,
+        lastRejected: "2024-01-20",
+        reason: "Missing temperature control certification"
+    }
+];
+
+// Function to populate super admin dashboard
+function populateSuperAdminDashboard() {
+    // Populate registered cold storages
+    const coldStoragesList = document.getElementById('coldStoragesList');
+    if (coldStoragesList) {
+        coldStoragesList.innerHTML = registeredStorages.map(storage => `
+            <tr>
+                <td>${storage.name}</td>
+                <td>${storage.licenseNo}</td>
+                <td>${storage.email}</td>
+                <td><span class="status-badge ${storage.status}">${storage.status}</span></td>
+                <td>
+                    <button class="action-btn ${storage.status === 'active' ? 'suspend-btn' : 'activate-btn'}" 
+                            onclick="toggleStorageStatus('${storage.licenseNo}')">
+                        ${storage.status === 'active' ? 'Suspend' : 'Activate'}
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // Populate registered customers
+    const customersList = document.getElementById('customersList');
+    if (customersList) {
+        customersList.innerHTML = registeredCustomers.map(customer => `
+            <tr>
+                <td>${customer.name}</td>
+                <td>${customer.email}</td>
+                <td>${customer.joinDate}</td>
+                <td><span class="status-badge ${customer.status}">${customer.status}</span></td>
+            </tr>
+        `).join('');
+    }
+
+    // Populate rejected cold storages
+    const rejectedStoragesList = document.getElementById('rejectedStoragesList');
+    if (rejectedStoragesList) {
+        rejectedStoragesList.innerHTML = rejectedStorages.map(storage => `
+            <tr>
+                <td>${storage.name}</td>
+                <td>${storage.licenseNo}</td>
+                <td>${storage.email}</td>
+                <td>${storage.reason}</td>
+                <td>
+                    <span class="rejection-count" title="Total Rejections">
+                        ${storage.rejectionCount}x
+                    </span>
+                </td>
+                <td>
+                    <button class="action-btn review-btn" onclick="reviewRejectedStorage('${storage.licenseNo}')">
+                        Review Again
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+}
+
+// Call this function when super admin logs in
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('superAdminDashboard')) {
+        populateSuperAdminDashboard();
+    }
+});
+
+// Add function to handle reviewing rejected storage
+function reviewRejectedStorage(licenseNo) {
+    const storage = rejectedStorages.find(s => s.licenseNo === licenseNo);
+    if (!storage) return;
+
+    Swal.fire({
+        title: 'Review Rejected Storage',
+        html: `
+            <div class="review-details">
+                <div class="detail-group">
+                    <label>Storage Name:</label>
+                    <p>${storage.name}</p>
+                </div>
+                <div class="detail-group">
+                    <label>License Number:</label>
+                    <p>${storage.licenseNo}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Email:</label>
+                    <p>${storage.email}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Previous Rejections:</label>
+                    <p>${storage.rejectionCount}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Last Rejection Reason:</label>
+                    <p>${storage.reason}</p>
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Allow New Application',
+        cancelButtonText: 'Close',
+        confirmButtonColor: '#4CAF50',
+        cancelButtonColor: '#6c757d'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Application Enabled',
+                text: 'The storage can now submit a new application',
+                confirmButtonColor: '#4CAF50'
+            });
+        }
+    });
+}
+
+// Add dummy registration requests
+const registrationRequests = [
+    {
+        companyName: "Central Cold Storage",
+        firstName: "John",
+        lastName: "Smith",
+        licenseNumber: "CSL123456",
+        email: "contact@centralcold.com",
+        location: "Bangalore Central",
+        date: "2024-01-25"
+    },
+    {
+        companyName: "Arctic Solutions",
+        firstName: "Sarah",
+        lastName: "Johnson",
+        licenseNumber: "ASL789012",
+        email: "info@arcticsolutions.com",
+        location: "Indiranagar, Bangalore",
+        date: "2024-01-26"
+    },
+    {
+        companyName: "FrostTech Storage",
+        firstName: "Michael",
+        lastName: "Brown",
+        licenseNumber: "FTS345678",
+        email: "contact@frosttech.com",
+        location: "Koramangala, Bangalore",
+        date: "2024-01-26"
+    }
+];
+
+// Function to populate registration requests
+function populateRegistrationRequests() {
+    const requestsContainer = document.getElementById('coldStorageRequests');
+    if (requestsContainer) {
+        requestsContainer.innerHTML = registrationRequests.map(request => `
+            <div class="request-card">
+                <div class="request-header">
+                    <h4>${request.companyName}</h4>
+                    <span class="request-date">${request.date}</span>
+                </div>
+                <div class="request-details">
+                    <p><strong>Name:</strong> ${request.firstName} ${request.lastName}</p>
+                    <p><strong>License No:</strong> ${request.licenseNumber}</p>
+                    <p><strong>Email:</strong> ${request.email}</p>
+                    <p><strong>Location:</strong> ${request.location}</p>
+                </div>
+                <div class="request-actions">
+                    <button class="approve-btn" onclick="handleRequest('approve', '${request.licenseNumber}')">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Approve
+                    </button>
+                    <button class="reject-btn" onclick="handleRequest('reject', '${request.licenseNumber}')">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Reject
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// Call this when the super admin dashboard loads
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('superAdminDashboard')) {
+        populateRegistrationRequests();
+        populateSuperAdminDashboard();
+    }
+}); 

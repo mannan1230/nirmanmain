@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Storage Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({
+                publicKey: "YcZlSwXapuSoTh5j3",
+            });
+        })();
+    </script>
+</head>
+<body>
+    <div class="superadmin-login-btn">
+        <button onclick="showSuperAdminLogin()">SuperAdmin</button>
+    </div>
+
+    <div class="login-container" id="loginSection">
+        <h1>Cold Storage Management</h1>
+        <div class="login-box">
+            <h2>Login</h2>
+            <div class="toggle-container">
+                <input type="radio" id="adminToggle" name="userType" value="admin" checked>
+                <label for="adminToggle">Cold Storage Admin</label>
+                <input type="radio" id="userToggle" name="userType" value="user">
+                <label for="userToggle">Customer</label>
+            </div>
+            <input type="text" placeholder="Username" id="username">
+            <input type="password" placeholder="Password" id="password">
+            <button onclick="login()">Login</button>
+            <div class="register-hint">
+                <p>Don't have an account? <span onclick="showRegistration()" class="register-link">Register here</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container" id="adminDashboard" style="display: none;">
+        <nav>
+            <h2>Admin Dashboard</h2>
+            <button onclick="logout()">Logout</button>
+        </nav>
+        <div class="options">
+            <button onclick="showPickupRequests()">Request for Pickups</button>
+            <button onclick="showStorageMonitoring()">Cold Storage Monitoring</button>
+            <button onclick="showEditInventory()">Edit Inventory</button>
+        </div>
+        <div id="pickupTable" style="display: none;">
+            <h3>Pickup Requests</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Temperature (°C)</th>
+                        <th>Capacity (kg)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Warehouse A</td>
+                        <td>-18°C</td>
+                        <td>5000</td>
+                    </tr>
+                    <tr>
+                        <td>Warehouse B</td>
+                        <td>-20°C</td>
+                        <td>3500</td>
+                    </tr>
+                    <tr>
+                        <td>Warehouse C</td>
+                        <td>-15°C</td>
+                        <td>4200</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="storageMonitoring" style="display: none;">
+            <h3>Cold Storage Monitoring</h3>
+            <div class="storage-grid">
+                <div class="storage-info">
+                    <h4>Storage Overview</h4>
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <span class="card-title">Total Compartments</span>
+                            <span class="card-value">6</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="card-title">Occupied</span>
+                            <span class="card-value">4</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="card-title">Available</span>
+                            <span class="card-value">2</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="compartment-grid">
+                    <h4>Compartment Status</h4>
+                    <div class="grid-container">
+                        <div class="compartment occupied">
+                            <h5>Compartment A1</h5>
+                            <p>Customer: Fresh Foods Inc.</p>
+                            <p>Content: Frozen Vegetables</p>
+                            <p>Temperature: -18°C</p>
+                            <p>Capacity: 80% Full</p>
+                        </div>
+                        <div class="compartment occupied">
+                            <h5>Compartment A2</h5>
+                            <p>Customer: Meat Masters</p>
+                            <p>Content: Premium Beef</p>
+                            <p>Temperature: -20°C</p>
+                            <p>Capacity: 95% Full</p>
+                        </div>
+                        <div class="compartment available">
+                            <h5>Compartment A3</h5>
+                            <p>Status: Available</p>
+                            <p>Temperature: -15°C</p>
+                        </div>
+                        <div class="compartment occupied">
+                            <h5>Compartment B1</h5>
+                            <p>Customer: Sea Foods Co.</p>
+                            <p>Content: Frozen Fish</p>
+                            <p>Temperature: -22°C</p>
+                            <p>Capacity: 60% Full</p>
+                        </div>
+                        <div class="compartment occupied">
+                            <h5>Compartment B2</h5>
+                            <p>Customer: Dairy Plus</p>
+                            <p>Content: Ice Cream</p>
+                            <p>Temperature: -25°C</p>
+                            <p>Capacity: 75% Full</p>
+                        </div>
+                        <div class="compartment available">
+                            <h5>Compartment B3</h5>
+                            <p>Status: Available</p>
+                            <p>Temperature: -15°C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="editInventorySection" class="edit-inventory-container" style="display: none;">
+            <div class="edit-inventory-content">
+                <h3>Edit Storage Inventory</h3>
+                <div class="compartments-list">
+                    <h4>Current Compartments</h4>
+                    <div id="compartmentsList" class="compartments-grid">
+                        <!-- Compartments will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="add-compartment-section">
+                    <h4>Add New Compartment</h4>
+                    <form onsubmit="addNewCompartment(event)" class="add-compartment-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="compartmentId">Compartment ID</label>
+                                <input 
+                                    type="text" 
+                                    id="compartmentId"
+                                    name="compartmentId" 
+                                    required 
+                                    placeholder="e.g., C13, C14"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="temperature">Temperature (°C)</label>
+                                <input 
+                                    type="number" 
+                                    id="temperature"
+                                    name="temperature" 
+                                    required 
+                                    placeholder="Enter temperature"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="maxCapacity">Max Capacity (kg)</label>
+                                <input 
+                                    type="number" 
+                                    id="maxCapacity"
+                                    name="maxCapacity" 
+                                    required 
+                                    placeholder="Enter capacity"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                                Add Compartment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container" id="userDashboard" style="display: none;">
+        <nav>
+            <h2>Customer Dashboard</h2>
+            <button onclick="logout()">Logout</button>
+        </nav>
+        
+        <div class="storage-finder">
+            <div class="map-section">
+                <h3>Find Nearby Cold Storages</h3>
+                <div class="map-container">
+                    <div id="map" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+            <div class="storage-list">
+                <h3>Nearby Cold Storages</h3>
+                <div id="storageCards"></div>
+            </div>
+        </div>
+
+        <div id="storageDetails" class="storage-details" style="display: none;">
+            <h4>Selected Storage Details</h4>
+            <div class="storage-info-header">
+                <span id="storageName">Storage Name</span>
+                <span id="storageDistance">Distance: 0.0 km</span>
+            </div>
+            <div class="available-compartments">
+                <h5>Available Compartments</h5>
+                <div class="compartment-list" id="compartmentList"></div>
+            </div>
+            <div class="request-form" id="requestForm" style="display: none;">
+                <h5>Send Storage Request</h5>
+                <form onsubmit="submitRequest(event)">
+                    <div class="form-group">
+                        <label>Selected Compartment</label>
+                        <input type="text" id="selectedCompartment" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Required Capacity (kg)</label>
+                        <input type="number" id="requestCapacity" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Storage Duration (days)</label>
+                        <input type="number" id="storageDuration" required min="1">
+                    </div>
+                    <button type="submit">Send Request</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="customer-storage-overview">
+            <div class="overview-section">
+                <h3>Your Storage Overview</h3>
+                <div class="storage-stats">
+                    <div class="stat-card">
+                        <span class="stat-title">Total Items</span>
+                        <span class="stat-value">1,250 kg</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-title">Active Storages</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-title">Total Cost</span>
+                        <span class="stat-value">₹12,500</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="storage-tracking">
+                <div class="current-storage">
+                    <h4>Current Storage Details</h4>
+                    <table class="storage-table">
+                        <thead>
+                            <tr>
+                                <th>Storage Location</th>
+                                <th>Item Type</th>
+                                <th>Quantity</th>
+                                <th>Storage Date</th>
+                                <th>Days Remaining</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Central Cold Storage</td>
+                                <td>Apples</td>
+                                <td>500 kg</td>
+                                <td>2024-01-15</td>
+                                <td>12 days</td>
+                                <td><span class="status-badge normal">Normal</span></td>
+                            </tr>
+                            <tr>
+                                <td>Metro Cold Storage</td>
+                                <td>Mangoes</td>
+                                <td>300 kg</td>
+                                <td>2024-01-10</td>
+                                <td>2 days</td>
+                                <td><span class="status-badge urgent">Urgent</span></td>
+                            </tr>
+                            <tr>
+                                <td>City Cold Chain</td>
+                                <td>Grapes</td>
+                                <td>450 kg</td>
+                                <td>2024-01-20</td>
+                                <td>15 days</td>
+                                <td><span class="status-badge normal">Normal</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="expiry-alerts">
+                    <h4>Priority Items (Near Expiry)</h4>
+                    <div class="alert-cards">
+                        <div class="alert-card urgent">
+                            <div class="alert-header">
+                                <span class="alert-title">Mangoes - 300kg</span>
+                                <span class="alert-badge">2 days left</span>
+                            </div>
+                            <p>Location: Metro Cold Storage</p>
+                            <p>Storage Temperature: -18°C</p>
+                            <button class="action-btn">Take Action</button>
+                        </div>
+                        <div class="alert-card warning">
+                            <div class="alert-header">
+                                <span class="alert-title">Apples - 500kg</span>
+                                <span class="alert-badge">12 days left</span>
+                            </div>
+                            <p>Location: Central Cold Storage</p>
+                            <p>Storage Temperature: -15°C</p>
+                            <button class="action-btn">Take Action</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="registration-container admin-registration" id="adminRegistration" style="display: none;">
+        <div class="registration-box">
+            <h2>Cold Storage Admin Registration</h2>
+            <button class="back-button" onclick="showLogin()">← Back to Login</button>
+            <form onsubmit="submitAdminRegistration(event)" class="registration-form">
+                <div class="form-section personal-info">
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-section business-info">
+                    <h3>Business Information</h3>
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" name="companyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cold Storage License Number</label>
+                        <input type="text" name="licenseNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload License Photo</label>
+                        <div class="file-upload">
+                            <input type="file" id="licensePhoto" accept="image/*" required>
+                            <label for="licensePhoto" class="file-upload-label">
+                                <span class="upload-icon">📎</span>
+                                <span class="upload-text">Choose File</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Submit for Verification</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="registration-container customer-registration" id="customerRegistration" style="display: none;">
+        <div class="registration-box">
+            <h2>Customer Registration</h2>
+            <button class="back-button" onclick="showLogin()">← Back to Login</button>
+            <form onsubmit="submitCustomerRegistration(event)" class="registration-form">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" required>
+                    </div>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="otp-modal" id="otpModal" style="display: none;">
+        <div class="modal-content">
+            <h2>Verify Your Email</h2>
+            <p class="otp-message">We've sent a verification code to your email</p>
+            <div class="otp-input-group">
+                <input type="text" maxlength="1" class="otp-digit" data-index="1">
+                <input type="text" maxlength="1" class="otp-digit" data-index="2">
+                <input type="text" maxlength="1" class="otp-digit" data-index="3">
+                <input type="text" maxlength="1" class="otp-digit" data-index="4">
+                <input type="text" maxlength="1" class="otp-digit" data-index="5">
+                <input type="text" maxlength="1" class="otp-digit" data-index="6">
+            </div>
+            <div class="otp-footer">
+                <button onclick="verifyOTP()" class="verify-btn">Verify</button>
+                <div class="resend-container">
+                    <span id="otpTimer">Resend in <span id="timerCount">30</span>s</span>
+                    <button onclick="resendOTP()" id="resendOtpBtn" class="resend-btn" disabled>Resend OTP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="superadmin-login-modal" id="superAdminLoginModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeSuperAdminLogin()">&times;</span>
+            <h2>SuperAdmin Login</h2>
+            <div class="form-group">
+                <input type="text" id="superAdminUsername" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" id="superAdminPassword" placeholder="Password">
+            </div>
+            <button onclick="loginSuperAdmin()">Login</button>
+        </div>
+    </div>
+
+    <div class="dashboard-container" id="superAdminDashboard" style="display: none;">
+        <nav>
+            <h2>SuperAdmin Dashboard</h2>
+            <button onclick="logout()">Logout</button>
+        </nav>
+        
+        <div class="admin-sections">
+            <div class="admin-section">
+                <h3>Cold Storage Registration Requests</h3>
+                <div class="request-cards" id="coldStorageRequests">
+                    <div class="request-card">
+                        <div class="request-header">
+                            <h4>Central Cold Storage</h4>
+                            <span class="request-date">2024-01-25</span>
+                        </div>
+                        <div class="request-details">
+                            <p><strong>Company:</strong> Central Storage Ltd.</p>
+                            <p><strong>License No:</strong> CSL123456</p>
+                            <p><strong>Email:</strong> contact@centralcold.com</p>
+                            <p><strong>Location:</strong> Bangalore Central</p>
+                        </div>
+                        <div class="request-actions">
+                            <button class="approve-btn" onclick="handleRequest('approve', 'CSL123456')">Approve</button>
+                            <button class="reject-btn" onclick="handleRequest('reject', 'CSL123456')">Reject</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>Registered Customers</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Join Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersList">
+                        <tr>
+                            <td>John Doe</td>
+                            <td>john@example.com</td>
+                            <td>2024-01-20</td>
+                            <td><span class="status-badge active">Active</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="admin-section">
+                <h3>Registered Cold Storages</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>License No</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coldStoragesList">
+                        <!-- Approved cold storages will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="otpModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Enter OTP</h3>
+            <p>Please enter the OTP sent to your email</p>
+            <div class="otp-container">
+                <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]">
+            </div>
+            <div id="otpTimer" style="display: none;">
+                Resend OTP in <span id="timerCount">30</span> seconds
+            </div>
+            <button onclick="verifyOTP()">Verify OTP</button>
+            <button id="resendOtpBtn" onclick="resendOTP()" disabled>Resend OTP</button>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html> 

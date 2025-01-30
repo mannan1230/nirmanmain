@@ -943,112 +943,96 @@ function loginSuperAdmin() {
 }
 
 // Update the handleRequest function
-function handleRequest(action, licenseNo) {
-    const requestCard = document.querySelector(`[data-license="${licenseNo}"]`);
-    const email = requestCard.querySelector('[data-email]').dataset.email;
-    const companyName = requestCard.querySelector('h4').textContent;
-    
+function handleRequest(action, licenseNumber) {
+    const request = registrationRequests.find(req => req.licenseNumber === licenseNumber);
+    if (!request) return;
+
     if (action === 'approve') {
-        // Generate credentials
-        const credentials = generateCredentials();
-        
-        // Add to approved cold storages list first
-        const storageData = {
-            name: companyName,
-            licenseNo: licenseNo,
-            email: email,
-            status: 'Active'
-        };
-        
-        // Add to the list
-        addToApprovedStorages(storageData);
-
-        // Send approval email
-        const approvalEmailBody = `
-            <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #FF6B6B;">Cold Storage Registration Approved</h2>
-                <p>Dear Admin,</p>
-                <p>Your cold storage registration for <strong>${companyName}</strong> has been approved.</p>
-                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <h3 style="color: #4ECDC4;">Your Login Credentials:</h3>
-                    <p><strong>Username:</strong> ${credentials.username}</p>
-                    <p><strong>Password:</strong> ${credentials.password}</p>
-                </div>
-                <p>Please login with these credentials and change your password upon first login.</p>
-                <p>Best regards,<br>Cold Storage Management Team</p>
-            </div>
-        `;
-
-        Email.send({
-            Host: EMAIL_CONFIG.smtpServer,
-            Port: EMAIL_CONFIG.port,
-            Username: EMAIL_CONFIG.senderEmail,
-            Password: EMAIL_CONFIG.smtpPassword,
-            To: email,
-            From: EMAIL_CONFIG.senderEmail,
-            Subject: "Cold Storage Registration Approved",
-            Body: approvalEmailBody
-        }).then(message => {
-            if (message === "OK") {
-                Swal.fire({
-                    title: 'Registration Approved!',
-                    text: 'Credentials have been sent to the admin',
-                    icon: 'success',
-                    confirmButtonColor: '#FF6B6B'
+        Swal.fire({
+            title: 'Approve Registration?',
+            text: `Are you sure you want to approve ${request.companyName}?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Approve',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#4CAF50',
+            cancelButtonColor: '#6c757d'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Add to registered storages
+                registeredStorages.push({
+                    name: request.companyName,
+                    licenseNo: request.licenseNumber,
+                    email: request.email,
+                    status: 'active',
+                    joinDate: new Date().toISOString().split('T')[0]
                 });
-            } else {
-                console.error('Email error:', message);
+
+                // Remove from requests
+                const index = registrationRequests.findIndex(req => req.licenseNumber === licenseNumber);
+                if (index > -1) {
+                    registrationRequests.splice(index, 1);
+                }
+
+                // Update UI
+                populateRegistrationRequests();
+                populateSuperAdminDashboard();
+
                 Swal.fire({
-                    title: 'Warning',
-                    text: 'Approval successful but failed to send email. Please contact the admin.',
-                    icon: 'warning',
-                    confirmButtonColor: '#FF6B6B'
+                    icon: 'success',
+                    title: 'Registration Approved',
+                    text: `${request.companyName} has been successfully registered`,
+                    confirmButtonColor: '#4CAF50'
                 });
             }
         });
-    } else {
-        // Handle rejection
-        const rejectionEmailBody = `
-            <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;">
-                <h2 style="color: #FF6B6B;">Cold Storage Registration Update</h2>
-                <p>Dear Admin,</p>
-                <p>We regret to inform you that your cold storage registration for <strong>${companyName}</strong> has been rejected.</p>
-                <p>Please contact support for more information.</p>
-                <p>Best regards,<br>Cold Storage Management Team</p>
-            </div>
-        `;
-
-        Email.send({
-            Host: EMAIL_CONFIG.smtpServer,
-            Port: EMAIL_CONFIG.port,
-            Username: EMAIL_CONFIG.senderEmail,
-            Password: EMAIL_CONFIG.smtpPassword,
-            To: email,
-            From: EMAIL_CONFIG.senderEmail,
-            Subject: "Cold Storage Registration Status",
-            Body: rejectionEmailBody
-        }).then(message => {
-            if (message === "OK") {
-                Swal.fire({
-                    title: 'Registration Rejected',
-                    text: 'The admin has been notified',
-                    icon: 'info',
-                    confirmButtonColor: '#FF6B6B'
+    } else if (action === 'reject') {
+        Swal.fire({
+            title: 'Reject Registration?',
+            text: 'Please provide a reason for rejection:',
+            input: 'text',
+            inputPlaceholder: 'Enter rejection reason',
+            showCancelButton: true,
+            confirmButtonText: 'Reject',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'You need to provide a reason for rejection!';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Add to rejected storages
+                rejectedStorages.push({
+                    name: request.companyName,
+                    licenseNo: request.licenseNumber,
+                    email: request.email,
+                    rejectionCount: 1,
+                    lastRejected: new Date().toISOString().split('T')[0],
+                    reason: result.value
                 });
-            } else {
-                console.error('Email error:', message);
+
+                // Remove from requests
+                const index = registrationRequests.findIndex(req => req.licenseNumber === licenseNumber);
+                if (index > -1) {
+                    registrationRequests.splice(index, 1);
+                }
+
+                // Update UI
+                populateRegistrationRequests();
+                populateSuperAdminDashboard();
+
                 Swal.fire({
-                    title: 'Warning',
-                    text: 'Rejection processed but failed to send email',
-                    icon: 'warning',
-                    confirmButtonColor: '#FF6B6B'
+                    icon: 'info',
+                    title: 'Registration Rejected',
+                    text: `${request.companyName}'s registration has been rejected`,
+                    confirmButtonColor: '#dc3545'
                 });
             }
         });
     }
-    
-    // Remove the request card
-    requestCard.remove();
 }
 
 function toggleStorageStatus(licenseNo) {
@@ -1773,4 +1757,445 @@ document.addEventListener('DOMContentLoaded', () => {
         populateRegistrationRequests();
         populateSuperAdminDashboard();
     }
-}); 
+});
+
+// Add dummy data for stored items with expiry dates
+const customerStoredItems = [
+    {
+        id: 1,
+        name: "Frozen Fish",
+        quantity: "500 kg",
+        storageName: "Central Cold Storage",
+        compartment: "C4",
+        storageDate: "2024-01-10",
+        expiryDate: "2024-02-10",
+        temperature: "-22°C"
+    },
+    {
+        id: 2,
+        name: "Premium Beef",
+        quantity: "300 kg",
+        storageName: "Metro Cold Storage",
+        compartment: "B2",
+        storageDate: "2024-01-15",
+        expiryDate: "2024-02-05",
+        temperature: "-20°C"
+    },
+    {
+        id: 3,
+        name: "Ice Cream",
+        quantity: "400 kg",
+        storageName: "Arctic Storage",
+        compartment: "A1",
+        storageDate: "2024-01-01",
+        expiryDate: "2024-02-01",
+        temperature: "-25°C"
+    }
+];
+
+// Function to check and show expiry alerts
+function checkExpiryAlerts() {
+    const today = new Date();
+    const warningThreshold = 10; // Days before expiry to show warning
+    
+    const expiringItems = customerStoredItems.filter(item => {
+        const expiryDate = new Date(item.expiryDate);
+        const daysUntilExpiry = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+        return daysUntilExpiry <= warningThreshold && daysUntilExpiry > 0;
+    });
+
+    if (expiringItems.length > 0) {
+        Swal.fire({
+            title: 'Priority Alert: Items Near Expiry',
+            html: `
+                <div class="expiry-alert">
+                    <div class="alert-header">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" 
+                            style="color: #ff4444;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>The following items are approaching their expiry date:</span>
+                    </div>
+                    <div class="expiring-items">
+                        ${expiringItems.map(item => {
+                            const daysLeft = Math.ceil(
+                                (new Date(item.expiryDate) - today) / (1000 * 60 * 60 * 24)
+                            );
+                            return `
+                                <div class="expiring-item">
+                                    <div class="item-header">
+                                        <span class="item-name">${item.name}</span>
+                                        <span class="days-left ${daysLeft <= 5 ? 'critical' : 'warning'}">
+                                            ${daysLeft} days left
+                                        </span>
+                                    </div>
+                                    <div class="item-details">
+                                        <p><strong>Storage:</strong> ${item.storageName} (${item.compartment})</p>
+                                        <p><strong>Quantity:</strong> ${item.quantity}</p>
+                                        <p><strong>Temperature:</strong> ${item.temperature}</p>
+                                        <p><strong>Expiry Date:</strong> ${item.expiryDate}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `,
+            icon: 'warning',
+            confirmButtonText: 'Acknowledge',
+            confirmButtonColor: '#FF6B6B',
+            showCloseButton: true,
+            width: '600px',
+            customClass: {
+                popup: 'expiry-alert-popup'
+            }
+        });
+    }
+}
+
+// Add styles for the expiry alert
+const styles = `
+<style>
+    .expiry-alert {
+        text-align: left;
+        padding: 1rem;
+    }
+
+    .alert-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+        color: #ff4444;
+        font-weight: 600;
+    }
+
+    .expiring-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .expiring-item {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid #e9ecef;
+    }
+
+    .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+    }
+
+    .item-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #2C3E50;
+    }
+
+    .days-left {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .days-left.warning {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .days-left.critical {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .item-details {
+        display: grid;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .item-details p {
+        margin: 0;
+        color: #495057;
+    }
+</style>
+`;
+
+// Add the styles to the document
+document.head.insertAdjacentHTML('beforeend', styles);
+
+// Call this function when the customer dashboard loads
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('userDashboard')) {
+        // Add slight delay to ensure dashboard is loaded
+        setTimeout(checkExpiryAlerts, 1000);
+    }
+});
+
+// Add dummy pickup requests data
+const pickupRequests = [
+    {
+        id: "PR001",
+        customerName: "John Smith",
+        itemName: "Frozen Fish",
+        quantity: "200 kg",
+        compartment: "C4",
+        requestDate: "2024-01-26",
+        pickupDate: "2024-01-28",
+        status: "pending",
+        temperature: "-22°C",
+        notes: "Require temperature verification before pickup"
+    },
+    {
+        id: "PR002",
+        customerName: "Sarah Johnson",
+        itemName: "Ice Cream",
+        quantity: "150 kg",
+        compartment: "A1",
+        requestDate: "2024-01-26",
+        pickupDate: "2024-01-27",
+        status: "approved",
+        temperature: "-25°C",
+        notes: "Early morning pickup preferred"
+    },
+    {
+        id: "PR003",
+        customerName: "Mike Brown",
+        itemName: "Premium Beef",
+        quantity: "300 kg",
+        compartment: "B2",
+        requestDate: "2024-01-25",
+        pickupDate: "2024-01-29",
+        status: "pending",
+        temperature: "-20°C",
+        notes: "Temperature sensitive item"
+    }
+];
+
+// Function to populate pickup requests
+function populatePickupRequests() {
+    const requestsContainer = document.getElementById('pickupRequestsContainer');
+    if (!requestsContainer) return;
+
+    requestsContainer.innerHTML = `
+        <div class="pickup-requests-header">
+            <h3>Pickup Requests</h3>
+            <div class="filter-controls">
+                <select id="statusFilter" onchange="filterPickupRequests()">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                <input type="date" id="dateFilter" onchange="filterPickupRequests()">
+            </div>
+        </div>
+        <div class="pickup-requests-list">
+            ${pickupRequests.map(request => `
+                <div class="pickup-request-card ${request.status}" data-id="${request.id}">
+                    <div class="request-header">
+                        <div class="request-id">
+                            <span class="label">Request ID:</span>
+                            <span class="value">${request.id}</span>
+                        </div>
+                        <div class="status-badge ${request.status}">
+                            ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                        </div>
+                    </div>
+                    <div class="request-details">
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="label">Customer:</span>
+                                <span class="value">${request.customerName}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Item:</span>
+                                <span class="value">${request.itemName}</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="label">Quantity:</span>
+                                <span class="value">${request.quantity}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Compartment:</span>
+                                <span class="value">${request.compartment}</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <span class="label">Pickup Date:</span>
+                                <span class="value">${request.pickupDate}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Temperature:</span>
+                                <span class="value">${request.temperature}</span>
+                            </div>
+                        </div>
+                        <div class="notes">
+                            <span class="label">Notes:</span>
+                            <span class="value">${request.notes}</span>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        ${request.status === 'pending' ? `
+                            <button class="action-btn approve" onclick="handlePickupRequest('${request.id}', 'approve')">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Approve
+                            </button>
+                            <button class="action-btn reject" onclick="handlePickupRequest('${request.id}', 'cancel')">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                                Cancel
+                            </button>
+                        ` : request.status === 'approved' ? `
+                            <button class="action-btn complete" onclick="handlePickupRequest('${request.id}', 'complete')">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                                Complete Pickup
+                            </button>
+                        ` : ''}
+                        <button class="action-btn view" onclick="viewPickupDetails('${request.id}')">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// Function to handle pickup request actions
+function handlePickupRequest(requestId, action) {
+    const request = pickupRequests.find(req => req.id === requestId);
+    if (!request) return;
+
+    let title, text, icon;
+    switch(action) {
+        case 'approve':
+            title = 'Approve Pickup Request?';
+            text = `Are you sure you want to approve pickup request for ${request.itemName}?`;
+            icon = 'question';
+            break;
+        case 'cancel':
+            title = 'Cancel Pickup Request?';
+            text = 'Please provide a reason for cancellation:';
+            icon = 'warning';
+            break;
+        case 'complete':
+            title = 'Complete Pickup?';
+            text = 'Confirm that the items have been picked up:';
+            icon = 'info';
+            break;
+    }
+
+    Swal.fire({
+        title,
+        text,
+        icon,
+        showCancelButton: true,
+        confirmButtonText: action.charAt(0).toUpperCase() + action.slice(1),
+        cancelButtonText: 'Close',
+        confirmButtonColor: action === 'approve' ? '#4CAF50' : '#dc3545',
+        input: action === 'cancel' ? 'text' : null,
+        inputPlaceholder: action === 'cancel' ? 'Enter cancellation reason' : null,
+        inputValidator: action === 'cancel' ? (value) => {
+            if (!value) return 'You need to provide a reason!';
+        } : null
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Update request status
+            request.status = action === 'approve' ? 'approved' : 
+                           action === 'cancel' ? 'cancelled' : 
+                           action === 'complete' ? 'completed' : request.status;
+
+            // Update UI
+            populatePickupRequests();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Updated Successfully',
+                text: `Pickup request has been ${request.status}`,
+                confirmButtonColor: '#4CAF50'
+            });
+        }
+    });
+}
+
+// Function to filter pickup requests
+function filterPickupRequests() {
+    const statusFilter = document.getElementById('statusFilter').value;
+    const dateFilter = document.getElementById('dateFilter').value;
+
+    const filteredRequests = pickupRequests.filter(request => {
+        const matchesStatus = statusFilter === 'all' || request.status === statusFilter;
+        const matchesDate = !dateFilter || request.pickupDate === dateFilter;
+        return matchesStatus && matchesDate;
+    });
+
+    // Update UI with filtered requests
+    // ... implementation similar to populatePickupRequests but with filteredRequests
+}
+
+// Function to view detailed pickup information
+function viewPickupDetails(requestId) {
+    const request = pickupRequests.find(req => req.id === requestId);
+    if (!request) return;
+
+    Swal.fire({
+        title: 'Pickup Request Details',
+        html: `
+            <div class="pickup-details">
+                <div class="detail-group">
+                    <label>Request ID</label>
+                    <p>${request.id}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Customer Name</label>
+                    <p>${request.customerName}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Item Details</label>
+                    <p>${request.itemName} (${request.quantity})</p>
+                </div>
+                <div class="detail-group">
+                    <label>Storage Information</label>
+                    <p>Compartment: ${request.compartment} | Temperature: ${request.temperature}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Request Timeline</label>
+                    <p>Requested: ${request.requestDate} | Pickup: ${request.pickupDate}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Status</label>
+                    <p class="status ${request.status}">${request.status.toUpperCase()}</p>
+                </div>
+                <div class="detail-group">
+                    <label>Special Notes</label>
+                    <p>${request.notes}</p>
+                </div>
+            </div>
+        `,
+        width: '600px',
+        confirmButtonText: 'Close',
+        confirmButtonColor: '#6c757d'
+    });
+} 
